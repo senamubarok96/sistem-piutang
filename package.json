@@ -4,7 +4,7 @@
   "description": "Sistem Manajemen Monitoring Piutang Galangan",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "vercel-build": "npm install --legacy-peer-deps && prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
@@ -39,5 +39,20 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "main": "next.config.js",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/senamubarok96/sistem-piutang.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/senamubarok96/sistem-piutang/issues"
+  },
+  "homepage": "https://github.com/senamubarok96/sistem-piutang#readme"
 }
