@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  password     String
+  name         String
+  role         UserRole @default(PETUGAS)
+  kodeKoord    String?  // Kode koordinator untuk koordinator
+  kodePetugas  String?  // Kode petugas untuk petugas
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  koordinator Koordinator?
+  petugas     Petugas?
+}
+
+model Piutang {
+  id            String      @id @default(cuid())
+  idPelanggan   String
+  namaPelanggan String
+  kodeWilayah   String
+  rupiahPiutang Float
+  status        StatusPiutang @default(BELUM_LUNAS)
+  bulan         String
+  tahun         String
+  petugasId     String
+  koordinatorId String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  // Relations
+  petugas     Petugas @relation(fields: [petugasId], references: [id])
+  koordinator Koordinator @relation(fields: [koordinatorId], references: [id])
+  setoran     Setoran[]
+}
+
+model Koordinator {
+  id            String   @id @default(cuid())
+  kodeKoord     String   @unique
+  namaKoord     String
+  userId        String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  user     User      @relation(fields: [userId], references: [id])
+  piutang  Piutang[]
+  petugas  Petugas[]
+  setoran  Setoran[]
+  rekap    Rekap[]
+}
+
+model Petugas {
+  id           String   @id @default(cuid())
+  kodePetugas  String   @unique
+  namaPetugas  String
+  userId       String   @unique
+  koordinatorId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  user        User        @relation(fields: [userId], references: [id])
+  koordinator Koordinator @relation(fields: [koordinatorId], references: [id])
+  piutang     Piutang[]
+  setoran     Setoran[]
+  rekap       Rekap[]
+}
+
+model Rekap {
+  id              String   @id @default(cuid())
+  bulan           String
+  tahun           String
+  koordinatorId   String?
+  petugasId       String?
+  sisaPiutang     Float    @default(0)
+  lunasPiutang    Float    @default(0)
+  totalPiutang    Float    @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  koordinator Koordinator? @relation(fields: [koordinatorId], references: [id])
+  petugas     Petugas?     @relation(fields: [petugasId], references: [id])
+}
+
+model Setoran {
+  id              String        @id @default(cuid())
+  rupiahSetor     Float
+  bulanSetor      String
+  tanggalSetor    DateTime
+  koordinatorId   String
+  petugasId       String
+  status          StatusSetoran @default(PENDING)
+  keterangan      String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  // Relations
+  koordinator Koordinator @relation(fields: [koordinatorId], references: [id])
+  petugas     Petugas     @relation(fields: [petugasId], references: [id])
+  piutang     Piutang[]
+}
+
+enum UserRole {
+  ADMIN
+  KOORDINATOR
+  PETUGAS
+}
+
+enum StatusPiutang {
+  LUNAS
+  BAYAR_SEBAGIAN
+  JANJI_BAYAR
+  BELUM_LUNAS
+}
+
+enum StatusSetoran {
+  ACCEPT
+  DECLINE
+  PENDING
+}
