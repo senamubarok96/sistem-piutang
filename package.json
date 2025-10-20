@@ -4,7 +4,7 @@
   "description": "Sistem Manajemen Monitoring Piutang Galangan",
   "scripts": {
     "dev": "next dev",
-    "vercel-build": "npm install --legacy-peer-deps && prisma generate && next build",
+    "build": "npm install --legacy-peer-deps && prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
@@ -21,8 +21,8 @@
     "bcryptjs": "^2.4.3",
     "lucide-react": "^0.263.1",
     "next": "15.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.0.0",
     "z-ai-web-dev-sdk": "^1.0.0"
