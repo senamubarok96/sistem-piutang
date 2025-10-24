@@ -1,13 +1,10 @@
 {
-  "framework": "nextjs",
+  "installCommand": "npm install --legacy-peer-deps",
   "buildCommand": "npm run vercel-build",
+  "devCommand": "next dev",
+  "framework": "nextjs",
   "outputDirectory": ".next",
   "regions": ["sin1"],
-  "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 30
-    }
-  },
   "env": {
     "NEXTAUTH_URL": "https://your-app-name.vercel.app",
     "NEXTAUTH_SECRET": "your-nextauth-secret-here"
@@ -15,6 +12,11 @@
   "build": {
     "env": {
       "PRISMA_GENERATE_DATAPROXY": "true"
+    }
+  },
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
     }
   }
 }
