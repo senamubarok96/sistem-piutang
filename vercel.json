@@ -1,7 +1,10 @@
 {
+  "version": 2,
   "buildCommand": "bash vercel-build.sh",
-  "installCommand": "echo 'Skipping default install, handled in vercel-build.sh'",
+  "installCommand": "echo 'Skipping default install... using custom build script'",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./src ./package.json ./vercel.json ./vercel-build.sh || exit 1"
+  "builds": [
+    { "src": "package.json", "use": "@vercel/next" }
+  ]
 }
