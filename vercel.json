@@ -1,18 +1,9 @@
 {
-  "buildCommand": "npm install --legacy-peer-deps && prisma generate && next build",
+  "buildCommand": "npm install --legacy-peer-deps && npm run vercel-build",
   "devCommand": "next dev",
   "framework": "nextjs",
   "outputDirectory": ".next",
   "regions": ["sin1"],
-  "env": {
-    "NEXTAUTH_URL": "https://your-app-name.vercel.app",
-    "NEXTAUTH_SECRET": "your-nextauth-secret-here"
-  },
-  "build": {
-    "env": {
-      "PRISMA_GENERATE_DATAPROXY": "true"
-    }
-  },
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 30
