@@ -1,12 +1,6 @@
 {
-  "buildCommand": "npm install --legacy-peer-deps && npm run vercel-build",
-  "devCommand": "next dev",
-  "framework": "nextjs",
-  "outputDirectory": ".next",
-  "regions": ["sin1"],
-  "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 30
-    }
-  }
+  "buildCommand": "npm run build",
+  "installCommand": "npm install --legacy-peer-deps",
+  "outputDirectory": "dist",
+  "framework": "nextjs"
 }
